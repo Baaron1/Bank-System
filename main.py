@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import DMChannel
 import random
 import time
 import os
@@ -30,6 +31,7 @@ async def hello(ctx):
 @client.command()
 async def usage(ctx):
     await ctx.send("Hello, I am the bank manager. Some of the things you can tell me to do are, ~open_account [Credit Value], ~view_account, ~deposit [Amount], ~transfer [The person you are transfering to] [The amount you are transfering]")
+    await ctx.send("The ~reset_file command will DM a Administrator asking them to reset the contents of your credit file. The Administrator will reach out to you soon. When your file is reset you will keep your current credits this just makes your channel more clean.")
     await ctx.send("You are also able to gamble by using ~gamble [Amount] [Your number guess] The number you are guessing is always between 1 and 10. If you win the money you won will be doubled, however if you lose you will lose the money you gambled")
     await ctx.send("Please remember that my mind is still being molded, and if you need any help contact Baaron1")
 
@@ -70,6 +72,14 @@ async def deposit(ctx, amount):
     await ctx.send(f"Added {amount} to your account. You are able to view your account with ~view_account")
     with open(f"logs.txt", 'r+') as f:
         f.write(username + " Has deposited " + amount + " credits\n")
+
+
+@client.command(name='reset_file', pass_context=True)
+async def reset_file(ctx):
+    username = str(ctx.author).split('#')[0]
+    user = await client.fetch_user("407036243138838529")
+    await DMChannel.send(user, f"{username} Would like to request a File Reset")
+    await ctx.send("Successfully requested a File Reset please be patient until an Administrator can contact you")
 
 
 @client.command()
