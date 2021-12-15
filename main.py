@@ -28,6 +28,13 @@ async def hello(ctx):
 
 
 @client.command()
+async def help(ctx):
+    await ctx.send("Hello, I am the bank manager. Some of the things you can tell me to do are, ~open_account [Credit Value], ~view_account, ~deposit [Amount], ~transfer [The person you are transfering to] [The amount you are transfering]")
+    await ctx.send("You are also able to gamble by using ~gamble [Amount] [Your number guess] The number you are guessing is always between 1 and 10. If you win the money you won will be doubled, however if you lose you will lose the money you gambled")
+    await ctx.send("Please remember that my mind is still being molded, and if you need any help contact Baaron1")
+
+
+@client.command()
 async def open_account(ctx, currentamount):
     username = str(ctx.author).split('#')[0]
     with open(f"{username}.txt", 'a') as f:
