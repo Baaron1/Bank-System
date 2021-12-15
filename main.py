@@ -41,7 +41,7 @@ async def open_account(ctx, currentamount):
     username = str(ctx.author).split('#')[0]
     with open(f"{username}.txt", 'a') as f:
         f.write(username + "|" + currentamount + "\n")
-    with open(f"logs.txt", 'r+') as f:
+    with open(f"logs.txt", 'a') as f:
         f.write(username + " Has opened an account starting at " + currentamount + " credits\n")
 
 
@@ -53,7 +53,7 @@ async def view_account(ctx):
             data = line.rstrip()
             user, amnt = data.split("|")
             await ctx.send(line.rstrip())
-    with open(f"logs.txt", 'r+') as f:
+    with open(f"logs.txt", 'a') as f:
         f.write(username + " Has viewed their account\n")
 
 
@@ -70,7 +70,7 @@ async def deposit(ctx, amount):
             print(f"Adding {amount} to {username} new total is {newamount}")
             f.write(username + "|" + newamount + "\n")
     await ctx.send(f"Added {amount} to your account. You are able to view your account with ~view_account")
-    with open(f"logs.txt", 'r+') as f:
+    with open(f"logs.txt", 'a') as f:
         f.write(username + " Has deposited " + amount + " credits\n")
 
 
@@ -101,14 +101,14 @@ async def transfer(ctx, receiver, amount:int):
             newamount2 = str(newamount2)
             f.write(user2 + "|" + newamount2 + "\n")
     await ctx.send(f"Successfully transfered {amount} to {receiver}")
-    with open(f"logs.txt", 'r+') as f:
+    with open(f"logs.txt", 'a') as f:
         f.write(username + " Has transfered " + str(amount) + " credits to " + str(receiver) + "\n")
 
 
 @client.command()
 async def gamble(ctx, amount, guess):
     username = str(ctx.author).split('#')[0]
-    with open(f"logs.txt", 'r+') as f:
+    with open(f"logs.txt", 'a') as f:
         f.write(username + " Has gambled " + amount + " credits" + "\n")
     answ = random.randint(1, 10)
     if int(guess) == int(answ):
