@@ -10,7 +10,7 @@ from discord.ext.commands.bot import Bot
 from apikeys import *
 
 
-#This is a discord bot used to manage credits in our discord server
+#This is a discord bot used for money and gambling stuff
 
 
 client = commands.Bot(command_prefix= "~")
