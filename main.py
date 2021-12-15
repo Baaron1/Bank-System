@@ -49,13 +49,16 @@ async def open_account(ctx, currentamount):
 @client.command()
 async def view_account(ctx):
     username = str(ctx.author).split('#')[0]
-    with open(f"{username}.txt", 'r') as f:
-        for line in f.readlines():
-            data = line.rstrip()
-            user, amnt = data.split("|")
-            await ctx.send(line.rstrip())
-    with open(f"logs.txt", 'a') as f:
-        f.write(username + " Has viewed their account\n")
+    try:
+        with open(f"{username}.txt", 'r') as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user, amnt = data.split("|")
+                await ctx.send(line.rstrip())
+        with open(f"logs.txt", 'a') as f:
+            f.write(username + " Has viewed their account\n")
+    except FileNotFoundError:
+        await ctx.send("You do not have an account yet, please use ~open_account to create one")
 
 
 @client.command()
