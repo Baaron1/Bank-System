@@ -43,6 +43,7 @@ async def open_account(ctx, currentamount):
         f.write(username + "|" + currentamount + "\n")
     with open(f"logs.txt", 'a') as f:
         f.write(username + " Has opened an account starting at " + currentamount + " credits\n")
+    await ctx.send(f"Successfully created an account containing {currentamount} credits")
 
 
 @client.command()
