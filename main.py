@@ -28,7 +28,7 @@ async def hello(ctx):
     await ctx.send("Hello, I am the bank manager")
 
 
-@client.event()
+@client.event
 async def on_member_join(member):
     channel = client.get_channel(920843623967383613)
     await channel.send(f"{member} Has been welcomed to the government")
