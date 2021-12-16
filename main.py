@@ -140,6 +140,15 @@ async def transfer(ctx, receiver, amount:int):
         await ctx.send("You or the selected user does not have an account. Please try again")
 
 
+@client.command(name='jm', pass_context=True)
+async def jm(ctx):
+    username = str(ctx.author).split('#')[0]
+    user = await client.fetch_user("407036243138838529")
+    await DMChannel.send(user, f"{username} Requests to join the mafia")
+    await ctx.send("Your request is being processed please be patient and wait for further notice")
+    
+
+
 @client.command()
 async def gamble(ctx, amount, guess):
     username = str(ctx.author).split('#')[0]
