@@ -35,6 +35,12 @@ async def on_member_join(member):
 
 
 @client.command()
+async def roll_dice(ctx):
+    dice1 = random.randint(1, 6)
+    await ctx.send(dice1)
+
+
+@client.command()
 async def usage(ctx):
     await ctx.send("Hello, I am the bank manager. Some of the things you can tell me to do are, ~open_account [Credit Value], ~view_account, ~deposit [Amount], ~transfer [The person you are transfering to] [The amount you are transfering]")
     await ctx.send("The ~reset_file command will DM a Administrator asking them to reset the contents of your credit file. The Administrator will reach out to you soon. When your file is reset you will keep your current credits this just makes your channel more clean.")
@@ -193,4 +199,4 @@ async def gamble(ctx, amount, guess):
                 f.write("hi213213EVOLVED" + "|" + newamnt + "\n")
 
 
-client.run(token)
+client.run(token) 
