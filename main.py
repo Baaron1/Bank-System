@@ -161,7 +161,5 @@ async def gamble(ctx, amount, guess):
                 newamnt = str(newamnt)
                 f.write("hi213213EVOLVED" + "|" + newamnt + "\n")
 
-        
-
 
 client.run(token)
