@@ -49,6 +49,25 @@ async def usage(ctx):
 
 
 @client.command()
+async def bank_deposit(ctx, user_go_to, amount):
+    username = str(ctx.author).split('#')[0]
+    try:
+        with open(f"{user_go_to}.txt", 'r+') as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user, amnt = data.split("|")
+                newamount = int(amount) + int(amnt)
+                newamount = int(newamount)
+                f.write(user_go_to + "|" + newamount + "\n")
+                await ctx.send("Process complete")
+        with open(f"logs.txt", 'a') as f:
+            f.write(username + " Has used the bank to deposit " + amount " credits into " + user_go_to + "\n")
+    except FileNotFoundError:
+        await ctx.send("Selected user does not have an account")
+
+
+
+@client.command()
 async def open_account(ctx, currentamount):
     username = str(ctx.author).split('#')[0]
     with open(f"{username}.txt", 'a') as f:
