@@ -28,6 +28,12 @@ async def hello(ctx):
     await ctx.send("Hello, I am the bank manager")
 
 
+@client.event()
+async def on_member_join(member):
+    channel = client.get_channel(920843623967383613)
+    await channel.send(f"{member} Has been welcomed to the government")
+
+
 @client.command()
 async def usage(ctx):
     await ctx.send("Hello, I am the bank manager. Some of the things you can tell me to do are, ~open_account [Credit Value], ~view_account, ~deposit [Amount], ~transfer [The person you are transfering to] [The amount you are transfering]")
@@ -65,17 +71,20 @@ async def view_account(ctx):
 async def deposit(ctx, amount):
     username = str(ctx.author).split('#')[0]
     now = datetime.datetime.now()
-    with open(f"{username}.txt", 'r+') as f:
-        for line in f.readlines():
-            data = line.rstrip()
-            user, amnt = data.split("|")
-            newamount = int(amnt) + int(amount)
-            newamount = str(newamount)
-            print(f"Adding {amount} to {username} new total is {newamount}")
-            f.write(username + "|" + newamount + "\n")
-    await ctx.send(f"Added {amount} to your account. You are able to view your account with ~view_account")
-    with open(f"logs.txt", 'a') as f:
-        f.write(username + " Has deposited " + amount + " credits\n")
+    try:
+        with open(f"{username}.txt", 'r+') as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user, amnt = data.split("|")
+                newamount = int(amnt) + int(amount)
+                newamount = str(newamount)
+                print(f"Adding {amount} to {username} new total is {newamount}")
+                f.write(username + "|" + newamount + "\n")
+        await ctx.send(f"Added {amount} to your account. You are able to view your account with ~view_account")
+        with open(f"logs.txt", 'a') as f:
+            f.write(username + " Has deposited " + amount + " credits\n")
+    except FileNotFoundError:
+        await ctx.send("Sorry, you do not have an account. Please use ~open_account to create one")
 
 
 @client.command(name='reset_file', pass_context=True)
