@@ -98,24 +98,27 @@ async def reset_file(ctx):
 @client.command()
 async def transfer(ctx, receiver, amount:int):
     username = str(ctx.author).split('#')[0]
-    with open(f"{username}.txt", 'r+') as f:
-        for line in f.readlines():
-            data = line.rstrip()
-            user, amnt = data.split("|")
-            newamount = int(amnt) - int(amount)
-            newamount = str(newamount)
-            print(f"Transfering {amount} credits from {username} to" + receiver)
-            f.write(username + "|" + newamount + "\n")
-    with open(f"{receiver}.txt", "r+") as f:
-        for line in f.readlines():
-            data = line.rstrip()
-            user2, amnt2 = data.split("|")
-            newamount2 = int(amnt2) + int(amount)
-            newamount2 = str(newamount2)
-            f.write(user2 + "|" + newamount2 + "\n")
-    await ctx.send(f"Successfully transfered {amount} to {receiver}")
-    with open(f"logs.txt", 'a') as f:
-        f.write(username + " Has transfered " + str(amount) + " credits to " + str(receiver) + "\n")
+    try:
+        with open(f"{username}.txt", 'r+') as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user, amnt = data.split("|")
+                newamount = int(amnt) - int(amount)
+                newamount = str(newamount)
+                print(f"Transfering {amount} credits from {username} to" + receiver)
+                f.write(username + "|" + newamount + "\n")
+        with open(f"{receiver}.txt", "r+") as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user2, amnt2 = data.split("|")
+                newamount2 = int(amnt2) + int(amount)
+                newamount2 = str(newamount2)
+                f.write(user2 + "|" + newamount2 + "\n")
+        await ctx.send(f"Successfully transfered {amount} to {receiver}")
+        with open(f"logs.txt", 'a') as f:
+            f.write(username + " Has transfered " + str(amount) + " credits to " + str(receiver) + "\n")
+    except FileNotFoundError:
+        await ctx.send("You or the selected user does not have an account. Please try again")
 
 
 @client.command()
