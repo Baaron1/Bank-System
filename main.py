@@ -87,6 +87,25 @@ async def deposit(ctx, amount):
         await ctx.send("Sorry, you do not have an account. Please use ~open_account to create one")
 
 
+@client.command()
+async def withdrawal(ctx, amount):
+    username = str(ctx.author).split('#')[0]
+    try:
+        with open(f"{username}.txt", 'r+') as f:
+            for line in f.readlines():
+                data = line.rstrip()
+                user, amnt = data.split("|")
+                newamount = int(amnt) - int(amount)
+                newamount = str(newamount)
+                print(f"Subtracting {amount} credits from {username} new total is {newamount}")
+                f.write(username + "|" + newamount + "\n")
+        await ctx.send(f"Subtracted {amount} credits from your account. If this was a mistake please contact an Administrator")
+        with open(f"logs.txt", 'a') as f:
+            f.write(username + " Has subtracted " + amount + " credits from their account\n")
+    except FileNotFoundError:
+        await ctx.send("Sorry, it looks like you do not have an account use ~open_account to create one")
+
+
 @client.command(name='reset_file', pass_context=True)
 async def reset_file(ctx):
     username = str(ctx.author).split('#')[0]
