@@ -57,11 +57,11 @@ async def bank_deposit(ctx, user_go_to, amount):
                 data = line.rstrip()
                 user, amnt = data.split("|")
                 newamount = int(amount) + int(amnt)
-                newamount = int(newamount)
+                newamount = str(newamount)
                 f.write(user_go_to + "|" + newamount + "\n")
                 await ctx.send("Process complete")
         with open(f"logs.txt", 'a') as f:
-            f.write(username + " Has used the bank to deposit " + amount " credits into " + user_go_to + "\n")
+            f.write(username + " Has used the bank to deposit " + amount + " credits into " + user_go_to + "'s account\n")
     except FileNotFoundError:
         await ctx.send("Selected user does not have an account")
 
