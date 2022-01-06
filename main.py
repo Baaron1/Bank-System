@@ -17,12 +17,6 @@ from apikeys import *
 client = commands.Bot(command_prefix= "~")
 
 
-@client.event
-async def on_ready():
-    print("The bot is ready")
-    print("################")
-
-
 @client.command()
 async def hello(ctx):
     await ctx.send("Hello, I am the bank manager")
@@ -60,8 +54,6 @@ async def bank_deposit(ctx, user_go_to, amount):
                 newamount = int(newamount)
                 f.write(user_go_to + "|" + newamount + "\n")
                 await ctx.send("Process complete")
-        with open(f"logs.txt", 'a') as f:
-            f.write(username + " Has used the bank to deposit " + amount " credits into " + user_go_to + "\n")
     except FileNotFoundError:
         await ctx.send("Selected user does not have an account")
 
